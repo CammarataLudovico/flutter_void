@@ -1,0 +1,20 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "flutter",
+            "cwd": "dev\\flutter_windows_3.35.4-stable\\flutter",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "its_aa_pn_2025_cross_platform",
+            "cwd": "$Recycle.Bin\\S-1-5-21-1367007442-2427724925-317025708-1005\\$RL99OV9\\its_aa_pn_2025_cross_platform",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}
