@@ -20,8 +20,8 @@ class _GreeterWidgetState extends State<GreeterWidget> {
   void initState() {
     super.initState();
     _form = FormGroup({
-      'helloName': FormControl<String>(value: ''),
-      'yoName': FormControl<String>(value: ''),
+      'greeting': FormControl<String>(value: ''),
+      'name': FormControl<String>(value: ''),
     });
   }
 
@@ -32,15 +32,18 @@ class _GreeterWidgetState extends State<GreeterWidget> {
   }
 
   void _updateGreeting() {
-    final _helloControllerName =
-        _form.control('helloName').value as String? ?? '';
-    final _yoControllerName = _form.control('yoName').value as String? ?? '';
+    final greeting = _form.control('greeting').value as String? ?? '';
+    final name = _form.control('name').value as String? ?? '';
 
     setState(() {
-      if (_helloControllerName.isEmpty && _yoControllerName.isNotEmpty) {
-        _message = "Yo $_yoControllerName";
-      } else if (_helloControllerName.isNotEmpty && _yoControllerName.isEmpty) {
-        _message = "Hello $_helloControllerName";
+      if (greeting.isNotEmpty && name.isNotEmpty) {
+        _message = "$greeting $name";
+      } else if (greeting.isNotEmpty) {
+        _message = greeting;
+      } else if (name.isNotEmpty) {
+        _message = name;
+      } else {
+        _message = '';
       }
     });
   }
@@ -64,26 +67,28 @@ class _GreeterWidgetState extends State<GreeterWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ReactiveTextField<String>(
-                formControlName: 'helloName',
+                formControlName: 'greeting',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Enter Your Name - HELLO',
+                  labelText: 'Enter Your Greeting (ciao, hello, yo...)',
                 ),
+                onChanged: (_) => _updateGreeting(), // '_' ignoro il parametro, mi basta sapere se è cambiato
               ),
               const SizedBox(height: 20),
               ReactiveTextField(
-                formControlName: 'yoName',
+                formControlName: 'name',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Enter Your Name - YO',
+                  labelText: 'Enter Your Name',
                 ),
+                onChanged: (_) => _updateGreeting(), // '_' ignoro il parametro, mi basta sapere se è cambiato
               ),
               const SizedBox(height: 20),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
+                    /*ElevatedButton(
                       onPressed: _updateGreeting,
                       style: ElevatedButton.styleFrom(
                         textStyle: const TextStyle(
@@ -93,7 +98,7 @@ class _GreeterWidgetState extends State<GreeterWidget> {
                       ),
                       child: const Text('Say Hello'),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 16),*/
                     ElevatedButton(
                       onPressed: _clearForm,
                       style: ElevatedButton.styleFrom(
