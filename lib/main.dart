@@ -32,8 +32,8 @@ class _GreeterWidgetState extends State<GreeterWidget> {
   }
 
   void _updateGreeting() {
-    final greeting = _form.control('greeting').value as String? ?? '';
-    final name = _form.control('name').value as String? ?? '';
+    final greeting = _form.control('greeting').value;
+    final name = _form.control('name').value;
 
     setState(() {
       if (greeting.isNotEmpty && name.isNotEmpty) {
@@ -49,7 +49,8 @@ class _GreeterWidgetState extends State<GreeterWidget> {
   }
 
   void _clearForm() {
-    _form.reset();
+    // reset control with value '' to avoid "null" value and error
+    _form.reset(value: {'greeting': '', 'name': ''});
     setState(() {
       _message = '';
     });
@@ -58,7 +59,7 @@ class _GreeterWidgetState extends State<GreeterWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("1.2 personal greeting")),
+      appBar: AppBar(title: const Text("1.2 personal greeter")),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ReactiveForm(
@@ -70,35 +71,26 @@ class _GreeterWidgetState extends State<GreeterWidget> {
                 formControlName: 'greeting',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Enter Your Greeting (ciao, hello, yo...)',
+                  labelText: 'Enter Your Greeting (ciao, hello, yo, hi...)',
                 ),
-                onChanged: (_) => _updateGreeting(), // '_' ignoro il parametro, mi basta sapere se è cambiato
+                onChanged: (_) =>
+                    _updateGreeting(), // '_' ignore the parameter, i only want to know if it changed
               ),
               const SizedBox(height: 20),
               ReactiveTextField(
                 formControlName: 'name',
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Enter Your Name',
+                  labelText: 'Enter Your Name - Mario, Paolo....',
                 ),
-                onChanged: (_) => _updateGreeting(), // '_' ignoro il parametro, mi basta sapere se è cambiato
+                onChanged: (_) =>
+                    _updateGreeting(), // '_' ignore the parameter, i only want to know if it changed
               ),
               const SizedBox(height: 20),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    /*ElevatedButton(
-                      onPressed: _updateGreeting,
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      child: const Text('Say Hello'),
-                    ),
-                    const SizedBox(width: 16),*/
                     ElevatedButton(
                       onPressed: _clearForm,
                       style: ElevatedButton.styleFrom(
