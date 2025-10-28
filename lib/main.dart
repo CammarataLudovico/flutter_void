@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TODO App',
+      title: '2.1: A simple To-Do List',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
       ),
-      home: const MyHomePage(title: 'TODO'),
+      home: const MyHomePage(title: '2.1: A simple To-Do List'),
     );
   }
 }
@@ -31,6 +31,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _list = <Todo>[];
+  bool _showDoneOnly = false;
+
+  List<Todo> get _filtered =>
+      _showDoneOnly ? _list.where((t) => t.isDone).toList() : _list;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +44,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           ElevatedButton.icon(
-            icon: Icon(Icons.filter_alt),
+            icon: Icon(_showDoneOnly ? Icons.filter_alt_off : Icons.filter_alt),
             onPressed: () {
               setState(() {
-                _list.clear();
+                _showDoneOnly = !_showDoneOnly;
               });
             },
-            label: const Text('Filter ToDo'),
+            label: Text(_showDoneOnly ? 'Show All' : 'Show Done'),
           ),
           SizedBox(width: 8),
           ElevatedButton.icon(
             icon: Icon(Icons.refresh),
             onPressed: () {
               setState(() {
-                _list.clear();
+                for (var i = 0; i < _list.length; i++) {
+                  _list[i].isDone = false;
+                }
               });
             },
             label: const Text('Reset All'),
@@ -76,9 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: ListView(
           children: [
-            if (_list.isEmpty) //
-              Text("non c'è niente"),
-            for (final (i, todo) in _list.indexed)
+            if (_filtered.isEmpty)
+              Text(_showDoneOnly ? "No ToDo completed!" : "There's no ToDo"),
+            for (final todo in _filtered)
               CheckboxListTile(
                 value: todo.isDone,
                 title: Text(
@@ -100,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (value) {
                   if (value == null) return;
                   setState(() {
-                    _list[i].isDone = value;
+                    final origIndex = _list.indexOf(todo);
+                    if (origIndex != -1) _list[origIndex].isDone = value;
                   });
                 },
               ),
@@ -115,13 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _createTodo() async {
-    // Push a full screen Add Task page and wait for the returned Todo
     final result = await Navigator.push<Todo>(
       context,
       MaterialPageRoute(builder: (context) => const AddTodoPage()),
     );
 
-    if (result == null) return; // user canceled the Add Task page
+    if (result == null) return;
 
     setState(() {
       _list.add(result);
