@@ -5,23 +5,40 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color _seedColor = Colors.deepPurple;
+
+  void _randomizeSeed() {
+    final rnd = Random();
+    final randomColor = Colors.primaries[rnd.nextInt(Colors.primaries.length)];
+    setState(() {
+      _seedColor = randomColor;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Color Changer Page",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: _seedColor),
       ),
-      home: const ColorChangerPage(),
+      // pass the randomizer callback to the page so it can trigger a theme change
+      home: ColorChangerPage(onRandomize: _randomizeSeed),
     );
   }
 }
 
 class ColorChangerPage extends StatefulWidget {
-  const ColorChangerPage({super.key});
+  final VoidCallback? onRandomize;
+  const ColorChangerPage({super.key, this.onRandomize});
 
   @override
   State<ColorChangerPage> createState() => _ColorChangerPageState();
@@ -31,12 +48,6 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
   Color _backgroundColor = Colors.white70;
   bool isSwitched = false;
   Brightness brightness = Brightness.light;
-
-  void _changeColor(Color newColor) {
-    setState(() {
-      _backgroundColor = newColor;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,31 +79,52 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    onPressed: () => {
-                      _changeColor(Colors.red),
-                      isSwitched = false,
+                    onPressed: () {
+                      setState(() {
+                        _backgroundColor = Colors.red;
+                        isSwitched = false;
+                      });
                     },
-                    child: const Text("Red"),
+                    child: const Text(
+                      "Red",
+                      style: TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: () => {
-                      _changeColor(Colors.red),
-                      isSwitched = false,
+                    onPressed: () {
+                      setState(() {
+                        _backgroundColor = Colors.green;
+                        isSwitched = false;
+                      });
                     },
-                    child: const Text("Green"),
+                    child: const Text(
+                      "Green",
+                      style: TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                     ),
-                    onPressed: () => {
-                      _changeColor(Colors.red),
-                      isSwitched = false,
+                    onPressed: () {
+                      setState(() {
+                        _backgroundColor = Colors.blue;
+                        isSwitched = false;
+                      });
                     },
-                    child: const Text("Blue"),
+                    child: const Text(
+                      "Blue",
+                      style: TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -119,6 +151,21 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
                             : Colors.white70;
                       });
                     },
+                  ),
+                  const SizedBox(width: 24),
+                  FloatingActionButton(
+                    onPressed: () {
+                      final rnd = Random();
+                      final randomColor = Colors
+                          .primaries[rnd.nextInt(Colors.primaries.length)];
+                      setState(() {
+                        _backgroundColor = randomColor;
+                        isSwitched = false;
+                      });
+                    },
+                    tooltip: "Randomize background",
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    child: const Icon(Icons.shuffle),
                   ),
                 ],
               ),
