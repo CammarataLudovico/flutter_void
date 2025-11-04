@@ -1,3 +1,4 @@
+import "dart:math";
 import "package:flutter/material.dart";
 
 void main() {
@@ -51,9 +52,13 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
+              Text(
                 "Tap a button to change the color!",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: isSwitched ? Colors.white70 : Colors.black87,
+                ),
               ),
               const SizedBox(height: 30),
               Row(
@@ -63,21 +68,30 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    onPressed: () => _changeColor(Colors.red),
+                    onPressed: () => {
+                      _changeColor(Colors.red),
+                      isSwitched = false,
+                    },
                     child: const Text("Red"),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: () => _changeColor(Colors.green),
+                    onPressed: () => {
+                      _changeColor(Colors.red),
+                      isSwitched = false,
+                    },
                     child: const Text("Green"),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                     ),
-                    onPressed: () => _changeColor(Colors.blue),
+                    onPressed: () => {
+                      _changeColor(Colors.red),
+                      isSwitched = false,
+                    },
                     child: const Text("Blue"),
                   ),
                 ],
@@ -86,9 +100,12 @@ class _ColorChangerPageState extends State<ColorChangerPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Dark mode",
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                  Text(
+                    isSwitched ? "Dark mode" : "Light Mode",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: isSwitched ? Colors.white70 : Colors.black87,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Switch(
