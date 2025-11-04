@@ -30,7 +30,6 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: _seedColor),
       ),
-      // pass the randomizer callback to the page so it can trigger a theme change
       home: ColorChangerPage(onRandomize: _randomizeSeed),
     );
   }
