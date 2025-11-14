@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   reactive_forms: ^18.1.1
   form_field_validator: ^1.1.0
+  very_good_analysis: ^10.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'form.dart';
-import 'todo.dart';
+import "package:flutter/material.dart";
+import "form.dart";
+import "todo.dart";
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '2.1: A simple To-Do List',
+      title: "2.1: A simple To-Do List",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
       ),
-      home: const MyHomePage(title: '2.1: A simple To-Do List'),
+      home: const MyHomePage(title: "2.1: A simple To-Do List"),
     );
   }
 }
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _showDoneOnly = !_showDoneOnly;
               });
             },
-            label: Text(_showDoneOnly ? 'Show All' : 'Show Done'),
+            label: Text(_showDoneOnly ? "Show All" : "Show Done"),
           ),
           SizedBox(width: 8),
           ElevatedButton.icon(
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               });
             },
-            label: const Text('Reset All'),
+            label: const Text("Reset All"),
           ),
           SizedBox(width: 8),
           ElevatedButton.icon(
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               });
             },
-            label: const Text('Invert All'),
+            label: const Text("Invert All"),
           ),
           SizedBox(width: 20),
         ],

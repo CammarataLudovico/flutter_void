@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'todo.dart';
-import 'package:reactive_forms/reactive_forms.dart';
+import "package:flutter/material.dart";
+import "todo.dart";
+import "package:reactive_forms/reactive_forms.dart";
 
 class AddTodoFormDialog extends StatefulWidget {
   const AddTodoFormDialog({super.key});
@@ -56,7 +56,7 @@ class _AddTodoFormDialogState extends State<AddTodoFormDialog> {
                 validationMessages: {
                   ValidationMessage.required: (_) => "Title is required!",
                   ValidationMessage.minLength: (error) =>
-                      'AT least 3 carachters!',
+                      "AT least 3 carachters!",
                 },
               ),
               ReactiveTextField(
@@ -64,7 +64,7 @@ class _AddTodoFormDialogState extends State<AddTodoFormDialog> {
                 decoration: InputDecoration(hintText: "description..."),
                 validationMessages: {
                   ValidationMessage.required: (_) => "description is required!",
-                  ValidationMessage.minLength: (error) => 'At least 20 caracthers!',
+                  ValidationMessage.minLength: (error) => "At least 20 caracthers!",
                 },
               ),
               SizedBox(height: 20),
@@ -139,7 +139,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Task'),
+        title: const Text("Add Task"),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Padding(
@@ -155,18 +155,18 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 formControlName: "title",
                 decoration: InputDecoration(hintText: "title..."),
                 validationMessages: {
-                  ValidationMessage.required: (_) => 'Title is required!',
+                  ValidationMessage.required: (_) => "Title is required!",
                   ValidationMessage.minLength: (error) =>
-                      'At least 3 characters!',
+                      "At least 3 characters!",
                 },
               ),
               ReactiveTextField(
                 formControlName: "description",
                 decoration: InputDecoration(hintText: "description..."),
                 validationMessages: {
-                  ValidationMessage.required: (_) => 'Description is required!',
+                  ValidationMessage.required: (_) => "Description is required!",
                   ValidationMessage.minLength: (error) =>
-                      'At least 20 characters!',
+                      "At least 20 characters!",
                 },
               ),
               SizedBox(height: 20),
