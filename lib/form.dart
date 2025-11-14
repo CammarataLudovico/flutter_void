@@ -48,25 +48,35 @@ class _AddTodoFormDialogState extends State<AddTodoFormDialog> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("nuovo todo!", style: theme.textTheme.headlineSmall),
+              Text("New Todo!", style: theme.textTheme.headlineSmall),
               SizedBox(height: 40),
               ReactiveTextField<String>(
                 formControlName: "title",
-                decoration: InputDecoration(hintText: "titolo..."),
+                decoration: InputDecoration(hintText: "title..."),
                 validationMessages: {
-                  ValidationMessage.required: (_) => "Ttile is required!",
+                  ValidationMessage.required: (_) => "Title is required!",
                   ValidationMessage.minLength: (error) =>
-                      'At least 3 characters!',
+                      'AT least 3 carachters!',
                 },
               ),
               ReactiveTextField(
                 formControlName: "description",
-                decoration: InputDecoration(hintText: "descrizione..."),
+                decoration: InputDecoration(hintText: "description..."),
+                validationMessages: {
+                  ValidationMessage.required: (_) => "description is required!",
+                  ValidationMessage.minLength: (error) => 'At least 20 caracthers!',
+                },
               ),
               SizedBox(height: 20),
               ReactiveCheckboxListTile(formControlName: "t&c"),
               SizedBox(height: 80),
-              ElevatedButton(onPressed: _submit, child: Text("salva!")),
+              ReactiveFormConsumer(
+                builder: (context, form, child) {
+                  return form.valid
+                      ? ElevatedButton(onPressed: _submit, child: Text("Save!"))
+                      : SizedBox.shrink();
+                },
+              ),
             ],
           ),
         ),
@@ -81,7 +91,7 @@ class _AddTodoFormDialogState extends State<AddTodoFormDialog> {
       createdAt: DateTime.now(),
       title: _form.control("title").value,
       description: _form.control("description").value,
-      isDone: _form.control("t&c").value,
+      isDone: false,
     );
 
     Navigator.pop(context, todo);
@@ -111,7 +121,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
         value: "",
         validators: [Validators.required, Validators.minLength(20)],
       ),
-      // checkbox must be true
       "t&c": FormControl<bool>(
         value: false,
         validators: [Validators.requiredTrue],
@@ -148,7 +157,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 validationMessages: {
                   ValidationMessage.required: (_) => 'Title is required!',
                   ValidationMessage.minLength: (error) =>
-                      'At least ${(error as Map<String, dynamic>)['requiredLength']} characters!',
+                      'At least 3 characters!',
                 },
               ),
               ReactiveTextField(
@@ -157,7 +166,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 validationMessages: {
                   ValidationMessage.required: (_) => 'Description is required!',
                   ValidationMessage.minLength: (error) =>
-                      'At least ${(error as Map<String, dynamic>)['requiredLength']} characters!',
+                      'At least 20 characters!',
                 },
               ),
               SizedBox(height: 20),
@@ -166,7 +175,13 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 title: const Text("Accept terms and condition of the Application!"),
               ),
               SizedBox(height: 80),
-              ElevatedButton(onPressed: _submit, child: Text("Save!")),
+              ReactiveFormConsumer(
+                builder: (context, form, child) {
+                  return form.valid
+                      ? ElevatedButton(onPressed: _submit, child: Text("Save!"))
+                      : SizedBox.shrink();
+                },
+              ),
             ],
           ),
         ),
@@ -181,7 +196,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       createdAt: DateTime.now(),
       title: _form.control("title").value,
       description: _form.control("description").value,
-      isDone: _form.control("t&c").value,
+      isDone: false,
     );
 
     Navigator.pop(context, todo);
