@@ -1,6 +1,7 @@
 import "package:_2_2_recipe_book/data/recipes_data.dart";
-import "package:_2_2_recipe_book/recipe.dart";
+import "package:_2_2_recipe_book/recipe_detail.dart";
 import "package:flutter/material.dart";
+import "package:url_launcher/url_launcher.dart";
 
 void main() => runApp(const RecipeApp());
 
@@ -26,10 +27,30 @@ class Homepage extends StatelessWidget {
       body: ListView.builder(
         itemCount: recipesData.length,
         itemBuilder: (context, index) {
-          final Recipe r = recipesData[index];
+          final recipe = recipesData[index];
           return ListTile(
-            title: Text(r.name),
-            onTap: () {},
+            leading: const CircleAvatar(child: Icon(Icons.restaurant_menu)),
+            title: Text(
+              recipe.name,
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () async {
+                await launchUrl(Uri.parse(recipe.url));
+              },
+            ),
+            onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RecipeDetail(recipe: recipe),
+                ),
+              );
+            },
           );
         },
       ),
