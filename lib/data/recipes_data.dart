@@ -1,0 +1,62 @@
+import "package:_2_2_recipe_book/recipe.dart";
+
+final List<Recipe> recipesData = [
+  Recipe(
+    name: "Pancake",
+    ingredients: [
+      "Farina 00 – 125 g",
+      "Burro – 25 g",
+      "Uova – 2",
+      "Sale – q.b.",
+      "Latte intero – 200 ml",
+      "Zucchero – 15 g",
+      "Lievito per dolci – 6 g",
+    ],
+    steps: [
+      "1. Sciogliere il burro e lasciarlo intiepidire",
+      "2. Separare tuorli e albumi",
+      "3. Mescolare tuorli, burro fuso e latte",
+      "4.Aggiungere farina, lievito setacciato e sale",
+      "5. Montare gli albumi con lo zucchero a neve",
+      "6. Incorporare gli albumi montati dal basso verso l’alto",
+      "7. Scaldare una padella con poco burro",
+      "8. Versare un mestolo di impasto al centro",
+      "9. Girare quando compaiono le bollicine",
+      "10. Cuocere fino a doratura",
+      "11. Far raffreddare separati, poi impilare e servire",
+    ],
+    url:
+        "https://ricette.giallozafferano.it/Pancakes-allo-sciroppo-d-acero.html",
+  ),
+  Recipe(
+    name: "Involtini di verza",
+    ingredients: [
+      "Verza – 4 foglie",
+      "Salsiccia – 200 g",
+      "Patate – 350 g",
+      "Valtellina Casera – 100 g",
+      "Olio extravergine d'oliva – q.b.",
+      "Sale fino – q.b.",
+      "Pepe nero – q.b.",
+      "Rosmarino – 1 rametto",
+      "Aglio – 1 spicchio",
+      "Salvia – 4 foglie (per condire)",
+      "Burro – 50 g (per condire)",
+      "Aglio – 2 spicchi (per condire)",
+    ],
+    steps: [
+      "1. Lessare le patate e schiacciarle.",
+      "2. Rimuovere il budello dalla salsiccia e unirla alle patate.",
+      "3. Aggiungere sale, pepe, rosmarino tritato e mescolare.",
+      "4. Sbollentare le foglie di verza e asciugarle.",
+      "5. Posizionare un po’ di ripieno su ogni foglia.",
+      "6. Aggiungere cubetti di Valtellina Casera.",
+      "7. Chiudere gli involtini ripiegando i lati verso l’interno.",
+      "8. Rosolare in padella con olio e uno spicchio d’aglio.",
+      "9. Aggiungere salvia, burro e due spicchi d’aglio per condire.",
+      "10. Cuocere finché gli involtini risultano dorati.",
+      "11. Servire caldi.",
+    ],
+    url: "https://ricette.giallozafferano.it/Involtini-di-verza.html",
+  ),
+];

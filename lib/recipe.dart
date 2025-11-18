@@ -1,9 +1,12 @@
-import "dart:ffi";
-
 class Recipe {
+  Recipe({
+    required this.name,
+    required this.ingredients,
+    required this.steps,
+    required this.url,
+  });
   final String name;
   final List<String> ingredients;
   final List<String> steps;
-
-  Recipe({required this.name, required this.ingredients, required this.steps});
+  final String url;
 }
