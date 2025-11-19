@@ -80,7 +80,7 @@ class _ContactListPageState extends State<ContactListPage> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
-                    final Contact? updated = await showDialog<Contact>(
+                    final updated = await showDialog<Contact>(
                       context: context,
                       builder: (context) =>
                           AddContactFormDialog(contact: contact),
