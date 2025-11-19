@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:prova/Contact.dart';
+import "package:contact_list_2_3/Contact_detail.dart";
+import "package:contact_list_2_3/data/contact_data.dart";
+import "package:flutter/material.dart";
 
 void main() {
   runApp(const MyApp());
 }
 
 void _addContact() {
-  // da fare
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -15,45 +16,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Contact List',
+      title: "Project 2.3: Contact List",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ContactListPage(),
+      home: const ContactListPage(),
     );
   }
 }
 
 class ContactListPage extends StatelessWidget {
-  ContactListPage({super.key});
-
-  final List<Contact> contactsList = [
-    Contact(firstName: "Mario", lastName: "Rossi", phoneNumbersList: ["320 99 324 333", "320 99 384 332"]),
-    Contact(firstName: "Gianni", lastName: "Verdi", phoneNumbersList: ["340 99 384 332"]),
-  ];
+  const ContactListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact List'),
+        title: const Text("Project 2.3: Contact List"),
       ),
       body: ListView(
         children: contactsList.map((contact) {
           return ListTile(
-            title: Text('Contatto: ${contact.firstName} ${contact.lastName}'),
-            subtitle: Text('Telefono: ${contact.phoneNumbersList.join(', ')}'),
+            leading: const Icon(Icons.phone),
+            title: Text("Contatto: ${contact.firstName} ${contact.lastName}"),
+            onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ContactDetail(contact: contact),
+                ),
+              );
+            },
           );
         }).toList(),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: const FloatingActionButton(
         onPressed: _addContact,
-        tooltip: 'add contact',
-        child: const Icon(Icons.add),
-      ), 
+        tooltip: "add contact",
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
-
-
