@@ -50,12 +50,10 @@ class _ContactDetailState extends State<ContactDetail> {
         });
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Contatto aggiornato')),
+        const SnackBar(content: Text("Contatto aggiornato")),
       );
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
