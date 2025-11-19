@@ -4,11 +4,11 @@ import "package:contact_list_2_3/Contact.dart";
     Contact(
       firstName: "Mario",
       lastName: "Rossi",
-      phoneNumbersList: ["320 99 324 333", "320 99 384 332"],
+      phoneNumbersList: ["3209932433", "3209938433"],
     ),
     Contact(
       firstName: "Gianni",
       lastName: "Verdi",
-      phoneNumbersList: ["340 99 384 332"],
+      phoneNumbersList: ["3099384332"],
     ),
   ];
