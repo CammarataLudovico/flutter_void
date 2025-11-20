@@ -40,7 +40,7 @@ class _AddContactFormDialogState extends State<AddContactFormDialog> {
                 value: p,
                 validators: [
                   Validators.required,
-                  Validators.pattern(r"^\d{10}$"),
+                  Validators.pattern(r"^\d{3,14}$"),
                 ],
               ),
             );
@@ -48,7 +48,7 @@ class _AddContactFormDialogState extends State<AddContactFormDialog> {
             controls.add(
               FormControl<String>(
                 value: p,
-                validators: [Validators.pattern(r"^$|^\d{10}$")],
+                validators: [Validators.pattern(r"^$|^\d{3,14}$")],
               ),
             );
           }
@@ -129,7 +129,7 @@ class _AddContactFormDialogState extends State<AddContactFormDialog> {
                                     ValidationMessage.required: (_) =>
                                         "Il Numero di Telefono è obbligatorio!",
                                     ValidationMessage.pattern: (_) =>
-                                        "Il Numero di Telefono deve essere di 10 cifre (solo numeri)!",
+                                        "Il Numero di Telefono deve contenere solo numeri (3–14 cifre)!",
                                   },
                                 ),
                               ),
@@ -158,7 +158,9 @@ class _AddContactFormDialogState extends State<AddContactFormDialog> {
                                 FormControl<String>(
                                   value: "",
                                   validators: [
-                                    Validators.pattern(r"^$|^\d{10}$"), // regex to allow only 10 numbers
+                                    Validators.pattern(
+                                      r"^$|^\d{3,14}$",
+                                    ), // minimo 3 cifre, massimo 14 cifre per il numero di telefono
                                   ],
                                 ),
                               );
