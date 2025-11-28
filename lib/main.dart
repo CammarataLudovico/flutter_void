@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:shopping_cart_3_1/pages/products.dart';
+import 'package:shopping_cart_3_1/router.dart';
 
 
 void main() {
@@ -12,8 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const ProductsPage(),
+    return MaterialApp.router(
+      routerConfig: router,
       title: "Shopping Cart",
       theme: ThemeData.dark()
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shopping_cart_3_1/models/CartItem.dart';
 import 'package:shopping_cart_3_1/models/Product.dart';
 import 'package:shopping_cart_3_1/provider.dart';
@@ -20,6 +21,10 @@ class ProductsPage extends ConsumerWidget {
       debugPrint("funzione da implementare");
     }
 
+    void addToCart(Product product) {
+      ref.read(cartProvider.notifier).addProduct(product);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scegli i tuo prodotti'),
@@ -29,7 +34,7 @@ class ProductsPage extends ConsumerWidget {
               label: Text('${myCart.length}'),
               child: const Icon(Icons.shopping_cart_rounded),
             ),
-            onPressed: _function,
+            onPressed: () => context.push('/cart'),
           
           ),
           const SizedBox(width: 100,)
@@ -44,7 +49,7 @@ class ProductsPage extends ConsumerWidget {
                 '${listOfProducts[i].description}\nPrezzo: \$${listOfProducts[i].price}'
                 ),
               trailing: ElevatedButton(
-                onPressed: _function, 
+                onPressed: () => addToCart(listOfProducts[i]), 
                 child: const Text('compra')),
               
             )
