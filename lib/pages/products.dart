@@ -1,30 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_cart_3_1/models/CartItem.dart';
 import 'package:shopping_cart_3_1/models/Product.dart';
+import 'package:shopping_cart_3_1/provider.dart';
 
-
-final List<Product> listOfProducts = const [
-  Product(
-    id: '1',
-    name: 'Smartphone',
-    description: 'Ultimo modello ultratecnologico', 
-    price: 599),
-  Product(
-    id: '2',
-    name: 'SmarTV',
-    description: 'Tv molto smart', 
-    price: 399),
-  Product(
-    id: '3',
-    name: 'Smartwatch',
-    description: 'Smartwatch waterproof', 
-    price: 199),
-  Product(
-    id: '4',
-    name: 'Laptop',
-    description: 'Modello con 64gb di Ram e SSD da 512GB', 
-    price: 759),
-];
 
 class ProductsPage extends ConsumerWidget {
   const ProductsPage({super.key});
@@ -33,6 +12,10 @@ class ProductsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final listOfProducts = ref.watch(productsProvider);
+    final myCart = ref.watch(cartProvider);
+
+
     void _function() {
       debugPrint("funzione da implementare");
     }
@@ -40,6 +23,17 @@ class ProductsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scegli i tuo prodotti'),
+        actions: [
+          IconButton(
+            icon: Badge(
+              label: Text('${myCart.length}'),
+              child: const Icon(Icons.shopping_cart_rounded),
+            ),
+            onPressed: _function,
+          
+          ),
+          const SizedBox(width: 100,)
+        ],
       ),
       body: ListView(
         children: [
