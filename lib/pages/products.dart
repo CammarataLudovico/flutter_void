@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shopping_cart_3_1/models/CartItem.dart';
 import 'package:shopping_cart_3_1/models/Product.dart';
+import 'package:shopping_cart_3_1/notifier.dart';
 import 'package:shopping_cart_3_1/provider.dart';
 
 
@@ -21,7 +21,7 @@ class ProductsPage extends ConsumerWidget {
       debugPrint("funzione da implementare");
     }
 
-    void addToCart(Product product) {
+    void _addToCart(Product product) {
       ref.read(cartProvider.notifier).addProduct(product);
     }
 
@@ -46,10 +46,10 @@ class ProductsPage extends ConsumerWidget {
             ListTile(
               title: Text(listOfProducts[i].name),
               subtitle: Text(
-                '${listOfProducts[i].description}\nPrezzo: \$${listOfProducts[i].price}'
+                '${listOfProducts[i].description}\nPrezzo: €${(listOfProducts[i].price).toStringAsFixed(2)}'
                 ),
               trailing: ElevatedButton(
-                onPressed: () => addToCart(listOfProducts[i]), 
+                onPressed: () => _addToCart(listOfProducts[i]), 
                 child: const Text('compra')),
               
             )

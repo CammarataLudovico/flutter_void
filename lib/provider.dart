@@ -30,54 +30,6 @@ final productsProvider = Provider<List<Product>>((ref) {
   
 
 
-final cartProvider = NotifierProvider<CartNotifier, List<CartItem>>((){
-  return CartNotifier();
-});
-
-class CartNotifier extends Notifier<List<CartItem>> {
-
-  @override
-  List<CartItem> build() {
-    return [];
-  }
-
-  int get totalProducts {
-    int total = 0;
-
-    for (var i = 0; i < state.length; i++) {
-      CartItem currentProd = state[i];
-      total = total + currentProd.quantity; 
-    }
-
-    return total;
-  }
-
-
-  double get totalPrice {
-    double totalCost = 0.00;
-
-    for (var i = 0; i < state.length; i++) {
-      double currentProdTotCost = state[i].product.price * state[i].quantity;
-      totalCost = totalCost + currentProdTotCost; 
-    }
-
-    return totalCost;
-  }
-  
-
-  void addProduct(Product product) {
-    final productIndex = state.indexWhere((element) => element.product.id == product.id);
-
-    if (productIndex >= 0) {
-        state[productIndex].quantity++;
-    } else {
-        CartItem newItem = CartItem(product: product, quantity: 1);
-
-        state = [...state, newItem];
-      }
-    }
-  }
-
 
 
 
