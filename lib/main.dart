@@ -36,8 +36,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class ColorChangerPage extends StatefulWidget {
-  final VoidCallback? onRandomize;
   const ColorChangerPage({super.key, this.onRandomize});
+  final VoidCallback? onRandomize;
 
   @override
   State<ColorChangerPage> createState() => _ColorChangerPageState();
