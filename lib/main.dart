@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import 'package:shopping_cart_3_1/pages/products.dart';
-import 'package:shopping_cart_3_1/router.dart';
-
+import "package:shopping_cart_3_1/router.dart";
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: "Shopping Cart",
-      theme: ThemeData.dark()
+      theme: ThemeData.dark(),
     );
   }
 }
