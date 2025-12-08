@@ -1,177 +1,59 @@
-import "dart:math";
+import "package:a_better_color_changer_3_2/providers/theme_notifier.dart";
+import "package:a_better_color_changer_3_2/screens/home.dart";
+import "package:a_better_color_changer_3_2/screens/settings.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeNotifierProvider);
 
-class _MyAppState extends State<MyApp> {
-  Color _seedColor = Colors.deepPurple;
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: "/",
+          redirect: (BuildContext context, GoRouterState state) => "/home",
+        ),
+        GoRoute(path: "/home", builder: (context, state) => const HomeScreen()),
+        GoRoute(
+          path: "/settings",
+          builder: (context, state) => const SettingsScreen(),
+        ),
+      ],
+    );
 
-  void _randomizeSeed() {
-    final rnd = Random();
-    final randomColor = Colors.primaries[rnd.nextInt(Colors.primaries.length)];
-    setState(() {
-      _seedColor = randomColor;
-    });
-  }
+    final lightScheme = ColorScheme.fromSeed(
+      seedColor: themeState.seedColor,
+    );
+    final darkScheme = ColorScheme.fromSeed(
+      seedColor: themeState.seedColor,
+      brightness: Brightness.dark,
+    );
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: "Project 3.2: A Better Color changer",
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: _seedColor),
+        colorScheme: lightScheme,
+        scaffoldBackgroundColor: lightScheme.surface,
+        useMaterial3: true,
       ),
-      home: ColorChangerPage(onRandomize: _randomizeSeed),
-    );
-  }
-}
-
-class ColorChangerPage extends StatefulWidget {
-  const ColorChangerPage({super.key, this.onRandomize});
-  final VoidCallback? onRandomize;
-
-  @override
-  State<ColorChangerPage> createState() => _ColorChangerPageState();
-}
-
-class _ColorChangerPageState extends State<ColorChangerPage> {
-  Color _backgroundColor = Colors.white70;
-  bool isSwitched = false;
-  Brightness brightness = Brightness.light;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Project 3.2: A Better Color changer"),
-        backgroundColor: Colors.black87,
+      darkTheme: ThemeData(
+        colorScheme: darkScheme,
+        scaffoldBackgroundColor: darkScheme.surface,
+        useMaterial3: true,
       ),
-      body: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        color: _backgroundColor,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Tap a button to change the color!",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: isSwitched ? Colors.white70 : Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _backgroundColor = Colors.red;
-                        isSwitched = false;
-                      });
-                    },
-                    child: const Text(
-                      "Red",
-                      style: TextStyle(
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _backgroundColor = Colors.green;
-                        isSwitched = false;
-                      });
-                    },
-                    child: const Text(
-                      "Green",
-                      style: TextStyle(
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _backgroundColor = Colors.purple;
-                        isSwitched = false;
-                      });
-                    },
-                    child: const Text(
-                      "Purple",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    isSwitched ? "Dark mode" : "Light Mode",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: isSwitched ? Colors.white70 : Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Switch(
-                    value: isSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isSwitched = value;
-                        brightness = value ? Brightness.dark : Brightness.light;
-                        _backgroundColor = (brightness == Brightness.dark)
-                            ? Colors.black87
-                            : Colors.white70;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 24),
-                  FloatingActionButton(
-                    onPressed: () {
-                      final rnd = Random();
-                      final randomColor = Colors
-                          .primaries[rnd.nextInt(Colors.primaries.length)];
-                      setState(() {
-                        _backgroundColor = randomColor;
-                        isSwitched = false;
-                      });
-                    },
-                    tooltip: "Randomize background",
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: const Icon(Icons.shuffle),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      themeMode: themeState.brightness == Brightness.dark
+          ? ThemeMode.dark
+          : ThemeMode.light,
+      routerConfig: router,
     );
   }
 }
